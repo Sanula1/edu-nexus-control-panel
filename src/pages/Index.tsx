@@ -1,16 +1,19 @@
 
-import React from 'react';
-import { Navigate } from 'react-router-dom';
-import { useAuth } from '@/contexts/AuthContext';
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Login from "./Login";
 
 const Index = () => {
-  const { user } = useAuth();
-  
-  if (user) {
-    return <Navigate to="/institutes" replace />;
-  }
-  
-  return <Navigate to="/login" replace />;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    if (isLoggedIn) {
+      navigate("/dashboard");
+    }
+  }, [navigate]);
+
+  return <Login />;
 };
 
 export default Index;
